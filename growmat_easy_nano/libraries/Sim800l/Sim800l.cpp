@@ -274,12 +274,17 @@ String Sim800l::getNumberSms(uint8_t index){
 
 
 String Sim800l::readSms(uint8_t index){
-  SIM.print (F("AT+CMGF=1\r")); 
+  SIM.print(F("AT+CMGF=1\r"));
+  //Serial.print(F("AT+CMGF=1\r"));
+  //String s = _readSerial();
+  //Serial.println(s);
+  //if (( s.indexOf("ER")) ==-1) {
   if (( _readSerial().indexOf("ER")) ==-1) {
     SIM.print (F("AT+CMGR="));
     SIM.print (index);
     SIM.print("\r");
     _buffer=_readSerial();
+    //Serial.println(_buffer);
     if (_buffer.indexOf("CMGR:")!=-1){
       return _buffer;
     }

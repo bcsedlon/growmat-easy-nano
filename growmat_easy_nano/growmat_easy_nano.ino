@@ -16,11 +16,11 @@ const byte KPD_COLS = 4;
 #define FANCONTROLPIN 11
 #define CYCLERCONTROLPIN 12
 
-#define EXTPIN 8
+#define EXTPIN 2
 #define EXTANAPIN A2
 
-#define LIGHTPIN A0
-#define DHTPIN 6
+#define LIGHTPIN A7
+#define DHTPIN 3
 //#define DHTTYPE DHT11   // DHT 11
 #define DHTTYPE DHT22   // DHT 22  (AM2302)
 //#define DHTTYPE DHT21   // DHT 21 (AM2301)
@@ -86,7 +86,7 @@ const byte KPD_COLS = 4;
 #define MESSAGE_EXT "\nE="
 #define MESSAGE_GSM  "\nGSM="
 
-#define GSMCHECKSMSINTERVAL  60000
+#define GSMCHECKSMSINTERVAL  60000//60000
 #define GSMCALLDURATION  30000
 
 #define UISTATE_ALARMLIST 1
@@ -366,7 +366,10 @@ public:
 		//if(!gsmMode)
 		//	return false;
 		//Serial.println('R');
-		String text = sim->readSms(21);
+		//String text = sim->readSms(21);
+		String text = sim->readSms(1);
+		//Serial.println('R');
+		//Serial.print(text);
 		//TODO TEST
 		//text = "#CODE9999 #00420724095917";
 		//Serial.print("SMS");
@@ -1138,6 +1141,10 @@ void setup() {
 
 	pinMode(LEDPIN, OUTPUT);
 
+	digitalWrite(LIGHTCONTROLPIN, HIGH);
+	digitalWrite(HEATERCONTROLPIN, HIGH);
+	digitalWrite(FANCONTROLPIN, HIGH);
+	digitalWrite(CYCLERCONTROLPIN, HIGH);
 	pinMode(LIGHTCONTROLPIN, OUTPUT);
 	pinMode(HEATERCONTROLPIN, OUTPUT);
 	pinMode(FANCONTROLPIN, OUTPUT);
@@ -1191,6 +1198,8 @@ void setup() {
 	Menu.setDrawHandler(uiDraw);
 	Menu.setExitHandler(uiMain);
 	Menu.enable(true);
+
+	//gsmMgr.sim->delAllSms();
 }
 
 
@@ -1504,7 +1513,7 @@ void loop() {
   		if (Serial.readString().indexOf("?")!=-1 ) {
 
   			Serial.println(F("OK"));
-
+/*
   			Serial.print(MESSAGE_TEMP);
   			Serial.print(temperature);
   			Serial.print(MESSAGE_HUMI);
@@ -1515,7 +1524,7 @@ void loop() {
   			//Serial.print(digitalRead(EXTPIN));
   			Serial.print(extana);
   			Serial.println();
-
+*/
   			//infoSerial((Stream*)&Serial);
 
   			/*

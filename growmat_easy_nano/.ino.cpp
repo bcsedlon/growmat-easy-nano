@@ -2,9 +2,10 @@
 //This is a automatic generated file
 //Please do not modify this file
 //If you touch this file your change will be overwritten during the next build
-//This file has been generated on 2017-04-22 21:43:33
+//This file has been generated on 2017-05-18 07:48:14
 
 #include "Arduino.h"
+#include <avr/wdt.h>
 #include <Wire.h>
 #include "libraries/Sim800l/Sim800l.h"
 #include <SoftwareSerial.h>

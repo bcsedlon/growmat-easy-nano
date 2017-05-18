@@ -1,3 +1,5 @@
+#include <avr/wdt.h>
+
 #define TEXT_GROWMATEASY "GROWMAT EASY"
 #define VERSION 1
 
@@ -1200,6 +1202,7 @@ void setup() {
 	Menu.enable(true);
 
 	//gsmMgr.sim->delAllSms();
+	wdt_enable(WDTO_8S);
 }
 
 
@@ -1273,6 +1276,7 @@ void infoSerial(Stream* ser) {
 unsigned long millisecondsGsm;
 
 void loop() {
+	wdt_reset();
 	//gsmMode = 0;
 
 	now = rtc.now();
@@ -1300,6 +1304,10 @@ void loop() {
 		// how often check sms, time expensive
 		//if(!(secondstime % 60) && gsmMode > 0) {
 		if((millisecondsGsm + GSMCHECKSMSINTERVAL < milliseconds) && gsmMode > 0) {
+
+			//LCD reset (for sure, may be                                                                                                                                  doesn't work)
+			lcd.begin(LCD_COLS, LCD_ROWS);
+
 			if(!gsmMgr.millisecondsCall) {
 				//Serial.println("SMS CHECK");
 				millisecondsGsm = milliseconds;
